@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.project_jdbc.dbtable.Magazyn;
 
@@ -82,6 +84,26 @@ public class MagazynManager {
 		return count;
 	}
 	
+	public List<Magazyn> getAllPositions() {
+		List<Magazyn> positions = new ArrayList<Magazyn>();
+
+		try {
+			ResultSet rs = getAllPositionsStmt.executeQuery();
+
+			while (rs.next()) {
+				Magazyn m = new Magazyn();
+				m.setId(rs.getInt("id"));
+				m.setName(rs.getString("name"));
+				m.setAmount(rs.getInt("amount"));
+				m.setMargin(rs.getInt("margin"));
+				positions.add(m);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return positions;
+	}
 	
 }
 
