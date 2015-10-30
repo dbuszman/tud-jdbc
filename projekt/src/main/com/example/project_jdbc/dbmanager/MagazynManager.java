@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.example.project_jdbc.dbtable.Magazyn;
+
 public class MagazynManager {
 
 	private Connection connection;
@@ -55,13 +57,31 @@ public class MagazynManager {
 		return connection;
 	}
 
-	void clearPersons() {
+	
+	
+	void removePositions() {
 		try {
 			deleteAllPositionsStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public int addPosition(Magazyn position) {
+		int count = 0;
+		try {
+			addPositionStmt.setString(1, position.getName());
+			addPositionStmt.setInt(2, position.getAmount());
+			addPositionStmt.setInt(3, position.getMargin());
 
+			count = addPositionStmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	
 }
 
