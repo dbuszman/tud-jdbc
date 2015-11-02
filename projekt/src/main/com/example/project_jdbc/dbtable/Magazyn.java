@@ -2,7 +2,7 @@ package com.example.project_jdbc.dbtable;
 
 public class Magazyn {
 	
-	private long id;
+	private long id_position;
 	
 	private String name;
 	
@@ -21,11 +21,11 @@ public class Magazyn {
 	}
 	
 	public long getId() {
-		return id;
+		return id_position;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId(long id_position) {
+		this.id_position = id_position;
 	}
 
 	public String getName() {
