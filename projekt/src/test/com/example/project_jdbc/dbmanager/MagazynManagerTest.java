@@ -38,4 +38,5 @@ public class MagazynManagerTest {
 		assertEquals(MARGIN_1, positionRetrieved.getMargin());
 		
 	}
+	
 }
