@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.example.project_jdbc.dbtable.Magazyn;;
+import com.example.project_jdbc.dbtable.Magazyn;
 
 public class MagazynManagerTest {
 
