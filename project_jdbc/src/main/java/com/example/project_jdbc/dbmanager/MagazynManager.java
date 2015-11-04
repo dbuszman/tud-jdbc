@@ -22,6 +22,7 @@ public class MagazynManager {
 	private PreparedStatement addPositionStmt;
 	private PreparedStatement deleteAllPositionsStmt;
 	private PreparedStatement getAllPositionsStmt;
+	private PreparedStatement updatePositionsStmt;
 
 	private Statement statement;
 
@@ -45,6 +46,8 @@ public class MagazynManager {
 
 			addPositionStmt = connection
 					.prepareStatement("INSERT INTO Magazyn (name, amount, margin) VALUES (?, ?, ?)");
+			updatePositionsStmt = connection
+					.prepareStatement("UPDATE Magazyn SET margin=15 WHERE amount < 2");
 			deleteAllPositionsStmt = connection
 					.prepareStatement("DELETE FROM Magazyn");
 			getAllPositionsStmt = connection
@@ -64,6 +67,14 @@ public class MagazynManager {
 	void removePositions() {
 		try {
 			deleteAllPositionsStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	void updatePositions() {
+		try {
+			updatePositionsStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -2,6 +2,7 @@ package com.example.project_jdbc.dbmanager;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -16,6 +17,10 @@ public class MagazynManagerTest {
 	private final static String NAME_1 = "Intel i7 2,8Ghz 4gen";
 	private final static int AMOUNT_1 = 5;
 	private final static int MARGIN_1 = 10;
+	
+	private final static String NAME_2 = "Nvidia GF 950 GTX";
+	private final static int AMOUNT_2 = 1;
+	private final static int MARGIN_2 = 10;
 
 	@Test
 	public void checkConnection(){
@@ -36,6 +41,25 @@ public class MagazynManagerTest {
 		assertEquals(NAME_1, positionRetrieved.getName());
 		assertEquals(AMOUNT_1, positionRetrieved.getAmount());
 		assertEquals(MARGIN_1, positionRetrieved.getMargin());
+		
+	}
+	
+	@Test
+	public void checkUpdating(){
+		
+		magazynManager.removePositions();
+		
+		Magazyn positionToUpdate = new Magazyn(NAME_2, AMOUNT_2, MARGIN_2);
+		
+		assertEquals(1,magazynManager.addPosition(positionToUpdate));
+		
+		magazynManager.updatePositions();
+		
+		List<Magazyn> positions = magazynManager.getAllPositions();
+		Magazyn positionRetrieved = positions.get(0);
+		
+		assertTrue(positionRetrieved.getAmount()<2);
+		assertEquals(positionRetrieved.getMargin(), 15);
 		
 	}
 	
