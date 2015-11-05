@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class MagazynManagerTest {
 	}
 	
 	@Test
-	public void checkAdding(){
+	public void checkAdding() throws SQLException{
 		
 		Magazyn position = new Magazyn(NAME_1, AMOUNT_1, MARGIN_1);
 		
@@ -45,7 +46,7 @@ public class MagazynManagerTest {
 	}
 	
 	@Test
-	public void checkUpdating(){
+	public void checkUpdating() throws SQLException{
 		
 		magazynManager.removePositions();
 		
