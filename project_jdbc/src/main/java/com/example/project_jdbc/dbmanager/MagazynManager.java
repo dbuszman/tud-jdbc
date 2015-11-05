@@ -114,6 +114,7 @@ public class MagazynManager {
 			
 			updatePositionsStmt.setInt(1, mrg);
 			updatePositionsStmt.setInt(2, amt);
+			
 			for (int i=0; i<records; i++){
 				
 				Magazyn positionRetrieved = positions.get(i);
@@ -127,8 +128,6 @@ public class MagazynManager {
 			}
 			
 		}
-	
-		
 	
 	public int addPosition(Magazyn position) {
 		int count = 0;
