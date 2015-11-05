@@ -22,7 +22,11 @@ private Connection connection;
 			"price DECIMAL, FOREIGN KEY (id_magazyn) REFERENCES Magazyn(id_position) ON DELETE CASCADE ON UPDATE CASCADE)";
 
 	private PreparedStatement addOrderStmt;
+	private PreparedStatement deleteOneOrderStmt;
 	private PreparedStatement deleteAllOrdersStmt;
+	private PreparedStatement updateOrderStmt;
+	private PreparedStatement getInnerJoinOrdersStmt;
+	private PreparedStatement getLeftJoinOrdersStmt;
 	private PreparedStatement getAllOrdersStmt;
 
 	private Statement statement;
@@ -35,14 +39,18 @@ private Connection connection;
 			ResultSet rs = connection.getMetaData().getTables(null, null, null,
 					null);
 			boolean tableExists = false;
+			boolean firstTableExists = false;
 			while (rs.next()) {
 				if ("ToOrder".equalsIgnoreCase(rs.getString("TABLE_NAME"))) {
 					tableExists = true;
 					break;
 				}
+				if ("Magazyn".equalsIgnoreCase(rs.getString("TABLE_NAME"))) {
+					firstTableExists = true;
+				}
 			}
 
-			if (!tableExists)
+			if (!tableExists && firstTableExists)
 				statement.executeUpdate(createTableToOrder);
 
 			addOrderStmt = connection
@@ -61,12 +69,17 @@ private Connection connection;
 		return connection;
 	}
 	
-	void removeOrders() {
+	void removeOrders() throws SQLException {
 		try {
+			connection.setAutoCommit(false);
 			deleteAllOrdersStmt.executeUpdate();
+			connection.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			connection.rollback();
 		}
+		finally {
+			connection.setAutoCommit(true);
+	    }
 	}
 	
 	public int addOrder(ToOrder order) {
