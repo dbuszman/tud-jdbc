@@ -3,10 +3,12 @@ package com.example.project_jdbc.dbmanager;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.Test;
 
+import com.example.project_jdbc.dbtable.Magazyn;
 import com.example.project_jdbc.dbtable.ToOrder;
 
 public class ToOrderManagerTest {
@@ -23,7 +25,7 @@ public class ToOrderManagerTest {
 	}
 	
 	@Test
-	public void checkAdding(){
+	public void checkAdding() throws SQLException{
 		
 		ToOrder order = new ToOrder(IDMAGAZYN_1, ORDEREDAMOUNT_1, PRICE_1);
 		
@@ -38,5 +40,18 @@ public class ToOrderManagerTest {
 		assertEquals(PRICE_1, orderRetrieved.getPrice(), 0.0f);
 		
 	}
+	
+	@Test
+	public void checkRemovingOneElement() throws SQLException{
+		
+		ToOrder order = new ToOrder(IDMAGAZYN_1, ORDEREDAMOUNT_1, PRICE_1);
+		
+		toOrderManager.removeOrders();
+		
+		assertEquals(1,toOrderManager.addOrder(order));
+		assertEquals(0,toOrderManager.removeOneOrder(order));
+	}
+	
+	
 
 }

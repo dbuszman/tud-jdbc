@@ -14,7 +14,6 @@ public class ToOrder {
 	}
 	
 	public ToOrder(long idMagazyn, int orderedAmount, float price){
-		super();
 		this.idMagazyn = idMagazyn;
 		this.orderedAmount = orderedAmount;
 		this.price = price;

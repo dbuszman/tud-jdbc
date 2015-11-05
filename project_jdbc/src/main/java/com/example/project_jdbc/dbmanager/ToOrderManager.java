@@ -55,6 +55,8 @@ private Connection connection;
 
 			addOrderStmt = connection
 					.prepareStatement("INSERT INTO ToOrder (id_magazyn, amount_to_order, price) VALUES (?, ?, ?)");
+			deleteOneOrderStmt = connection
+					.prepareStatement("DELETE FROM Magazyn WHERE id_position = ?");
 			deleteAllOrdersStmt = connection
 					.prepareStatement("DELETE FROM ToOrder");
 			getAllOrdersStmt = connection
