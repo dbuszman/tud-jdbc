@@ -14,7 +14,6 @@ public class Magazyn {
 	}
 	
 	public Magazyn(String name, int amount, int margin){
-		super();
 		this.name = name;
 		this.amount = amount;
 		this.margin = margin;

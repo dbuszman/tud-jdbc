@@ -22,6 +22,9 @@ public class MagazynManagerTest {
 	private final static String NAME_2 = "Nvidia GF 950 GTX";
 	private final static int AMOUNT_2 = 1;
 	private final static int MARGIN_2 = 10;
+	
+	private final static int DEFAULT_MARGIN = 15;
+	private final static int MIN_AMOUNT = 2;
 
 	@Test
 	public void checkConnection(){
@@ -46,6 +49,17 @@ public class MagazynManagerTest {
 	}
 	
 	@Test
+	public void checkRemovingOneElement() throws SQLException{
+		
+		Magazyn position = new Magazyn(NAME_1, AMOUNT_1, MARGIN_1);
+		
+		magazynManager.removePositions();
+		
+		assertEquals(1,magazynManager.addPosition(position));
+		assertEquals(0,magazynManager.removeOnePosition(position));
+	}
+	
+	@Test
 	public void checkUpdating() throws SQLException{
 		
 		magazynManager.removePositions();
@@ -54,13 +68,13 @@ public class MagazynManagerTest {
 		
 		assertEquals(1,magazynManager.addPosition(positionToUpdate));
 		
-		magazynManager.updatePositions();
+		magazynManager.updatePositions(DEFAULT_MARGIN, MIN_AMOUNT);
 		
 		List<Magazyn> positions = magazynManager.getAllPositions();
 		Magazyn positionRetrieved = positions.get(0);
 		
-		assertTrue(positionRetrieved.getAmount()<2);
-		assertEquals(positionRetrieved.getMargin(), 15);
+		assertTrue(positionRetrieved.getAmount()<MIN_AMOUNT);
+		assertEquals(positionRetrieved.getMargin(), DEFAULT_MARGIN);
 		
 	}
 	
