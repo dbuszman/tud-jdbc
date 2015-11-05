@@ -23,7 +23,8 @@ public class MagazynManager {
 	private PreparedStatement deleteAllPositionsStmt;
 	private PreparedStatement getAllPositionsStmt;
 	private PreparedStatement updatePositionsStmt;
-
+	private PreparedStatement countAllPositionsStmt;
+	
 	private Statement statement;
 
 	public MagazynManager() {
@@ -47,12 +48,15 @@ public class MagazynManager {
 			addPositionStmt = connection
 					.prepareStatement("INSERT INTO Magazyn (name, amount, margin) VALUES (?, ?, ?)");
 			updatePositionsStmt = connection
-					.prepareStatement("UPDATE Magazyn SET margin=15 WHERE amount < 2");
+					.prepareStatement("UPDATE Magazyn SET margin = 15 WHERE amount < 2");
 			deleteAllPositionsStmt = connection
 					.prepareStatement("DELETE FROM Magazyn");
 			getAllPositionsStmt = connection
 					.prepareStatement("SELECT id_position, name, amount, margin FROM Magazyn");
-
+			countAllPositionsStmt = connection
+					.prepareStatement("SELECT COUNT(*) FROM Magazyn");
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -62,7 +66,18 @@ public class MagazynManager {
 		return connection;
 	}
 
-	
+	public int getCount(){
+		
+			try {
+				ResultSet result = countAllPositionsStmt.executeQuery();
+				if(result.next()){
+					return result.getInt(0);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return 0;
+	}
 	
 	void removePositions() {
 		try {
@@ -72,7 +87,8 @@ public class MagazynManager {
 		}
 	}
 	
-	void updatePositions() {
+	void updatePositions(){
+		
 		try {
 			updatePositionsStmt.executeUpdate();
 		} catch (SQLException e) {
