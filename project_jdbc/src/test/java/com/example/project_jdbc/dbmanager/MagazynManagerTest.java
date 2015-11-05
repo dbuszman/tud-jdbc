@@ -23,6 +23,14 @@ public class MagazynManagerTest {
 	private final static int AMOUNT_2 = 1;
 	private final static int MARGIN_2 = 10;
 	
+	private final static String NAME_3 = "WD BLUE 500 GB";
+	private final static int AMOUNT_3 = 2;
+	private final static int MARGIN_3 = 11;
+	
+	private final static String NAME_4 = "TP Link WRL-8424ND";
+	private final static int AMOUNT_4 = 1;
+	private final static int MARGIN_4 = 5;
+	
 	private final static int DEFAULT_MARGIN = 15;
 	private final static int MIN_AMOUNT = 2;
 
@@ -74,8 +82,27 @@ public class MagazynManagerTest {
 		Magazyn positionRetrieved = positions.get(0);
 		
 		assertTrue(positionRetrieved.getAmount()<MIN_AMOUNT);
-		assertEquals(positionRetrieved.getMargin(), DEFAULT_MARGIN);
+		assertEquals(positionRetrieved.getMargin(), DEFAULT_MARGIN);		
+	}
+	
+	@Test
+	public void checkCountingRecords() throws SQLException{
 		
+		magazynManager.removePositions();
+		
+		Magazyn p1 = new Magazyn (NAME_1, AMOUNT_1, MARGIN_1);
+		assertEquals(1,magazynManager.addPosition(p1));
+		
+		Magazyn p2 = new Magazyn (NAME_2, AMOUNT_2, MARGIN_2);
+		assertEquals(1,magazynManager.addPosition(p2));
+		
+		Magazyn p3 = new Magazyn (NAME_3, AMOUNT_3, MARGIN_3);
+		assertEquals(1,magazynManager.addPosition(p3));
+		
+		Magazyn p4 = new Magazyn (NAME_4, AMOUNT_4, MARGIN_4);
+		assertEquals(1,magazynManager.addPosition(p4));
+	
+		assertEquals(4, magazynManager.getCount());
 	}
 	
 }
