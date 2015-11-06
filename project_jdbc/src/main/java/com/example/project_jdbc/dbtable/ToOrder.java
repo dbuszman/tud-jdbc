@@ -13,8 +13,7 @@ public class ToOrder {
 	public ToOrder() {
 	}
 	
-	public ToOrder(long idMagazyn, int orderedAmount, float price){
-		this.idMagazyn = idMagazyn;
+	public ToOrder(int orderedAmount, float price){
 		this.orderedAmount = orderedAmount;
 		this.price = price;
 	}

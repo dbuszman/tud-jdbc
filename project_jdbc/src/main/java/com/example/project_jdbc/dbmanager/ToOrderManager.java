@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.project_jdbc.dbtable.Magazyn;
 import com.example.project_jdbc.dbtable.ToOrder;
 
 public class ToOrderManager {
@@ -56,7 +57,7 @@ private Connection connection;
 			addOrderStmt = connection
 					.prepareStatement("INSERT INTO ToOrder (id_magazyn, amount_to_order, price) VALUES (?, ?, ?)");
 			deleteOneOrderStmt = connection
-					.prepareStatement("DELETE FROM Magazyn WHERE id_position = ?");
+					.prepareStatement("DELETE FROM ToOrder WHERE id_order = ?");
 			deleteAllOrdersStmt = connection
 					.prepareStatement("DELETE FROM ToOrder");
 			getAllOrdersStmt = connection
@@ -67,8 +68,25 @@ private Connection connection;
 		}
 	}
 	
+	MagazynManager magazynManager = new MagazynManager();
+	
 	Connection getConnection() {
 		return connection;
+	}
+	
+	int removeOneOrder(ToOrder order) {
+		List<Magazyn> positions = magazynManager.getAllPositions();
+		Magazyn positionRetrieved = positions.get(0);
+		
+		int count = 0;
+		try {
+			deleteOneOrderStmt.setLong(1, positionRetrieved.getId());
+			count = deleteOneOrderStmt.executeUpdate();
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+		return count;
 	}
 	
 	void removeOrders() throws SQLException {
@@ -85,9 +103,13 @@ private Connection connection;
 	}
 	
 	public int addOrder(ToOrder order) {
+		
+		List<Magazyn> positions = magazynManager.getAllPositions();
+		Magazyn positionRetrieved = positions.get(0);
+		
 		int count = 0;
 		try {
-			addOrderStmt.setLong(1, order.getMagazynId());
+			addOrderStmt.setLong(1, positionRetrieved.getId());
 			addOrderStmt.setInt(2, order.getOrderedAmount());
 			addOrderStmt.setFloat(3, order.getPrice());
 
