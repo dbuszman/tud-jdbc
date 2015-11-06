@@ -62,7 +62,10 @@ private Connection connection;
 					.prepareStatement("DELETE FROM ToOrder");
 			getAllOrdersStmt = connection
 					.prepareStatement("SELECT id_order, id_magazyn, amount_to_order, price FROM ToOrder");
-
+			updateOrderStmt = connection
+					.prepareStatement("UPDATE ToOrder SET id_magazyn = ? WHERE id_order = ?");
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -100,6 +103,18 @@ private Connection connection;
 		finally {
 			connection.setAutoCommit(true);
 	    }
+	}
+	
+	void updateForeignKeyToNull(ToOrder order){
+		
+		try {
+			updateOrderStmt.setObject(1, null);
+			updateOrderStmt.setLong(2, order.getId());
+			updateOrderStmt.executeUpdate();
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
 	}
 	
 	public int addOrder(ToOrder order) {
