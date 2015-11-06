@@ -117,6 +117,18 @@ private Connection connection;
 		}
 	}
 	
+	void updateForeignKey(ToOrder order, Magazyn position){
+		
+		try {
+			updateOrderStmt.setLong(1, position.getId());;
+			updateOrderStmt.setLong(2, order.getId());
+			updateOrderStmt.executeUpdate();
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
 	public int addOrder(ToOrder order) {
 		
 		List<Magazyn> positions = magazynManager.getAllPositions();

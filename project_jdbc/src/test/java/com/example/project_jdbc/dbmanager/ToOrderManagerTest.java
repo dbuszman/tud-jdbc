@@ -17,6 +17,8 @@ public class ToOrderManagerTest {
 	ToOrderManager toOrderManager = new ToOrderManager();
 	MagazynManager magazynManager = new MagazynManager();
 	
+	private final static int ORDEREDAMOUNT_2 = 5;
+	private final static float PRICE_2 = 500;
 	
 	private final static int ORDEREDAMOUNT_1 = 5;
 	private final static float PRICE_1 = 500;
@@ -49,6 +51,22 @@ public class ToOrderManagerTest {
 		ToOrder orderRetrieved = orders.get(0);
 		
 		assertNotNull(orderRetrieved.getMagazynId());
+	}
+	
+	@Test
+	public void checkUpdatingFK2() throws SQLException{
+		ToOrder order = new ToOrder(ORDEREDAMOUNT_2, PRICE_2);
+		
+		toOrderManager.removeOrders();
+		
+		magazynManager.addPosition(position);
+		
+		assertEquals(1,toOrderManager.addOrder(order));
+		
+		toOrderManager.updateForeignKey(order, position);
+		
+		
+		assertEquals(order.getMagazynId(), position.getId());
 	}
 	
 	@Test
